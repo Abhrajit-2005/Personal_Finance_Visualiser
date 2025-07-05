@@ -3,8 +3,12 @@ import { useState } from "react";
 import useSWR from "swr";
 import TransactionForm from "@/components/TransactionForm";
 import TransactionList from "@/components/TransactionList";
-import MonthlyExpensesChart from "@/components/MonthlyExpensesChart";
-import CategoryPieChart from "@/components/CategoryPieChart";
+import dynamic from "next/dynamic";
+import pic from "../../public/pic.png"
+
+const MonthlyExpensesChart = dynamic(() => import("@/components/MonthlyExpensesChart"), { ssr: false });
+const CategoryPieChart = dynamic(() => import("@/components/CategoryPieChart"), { ssr: false });
+
 import SummaryCards from "@/components/SummaryCards";
 
 
@@ -54,25 +58,49 @@ export default function Home() {
     : [];
 
   return (
-    <main className="max-w-3xl mx-auto p-4 space-y-6">
-      <h1 className="text-2xl font-bold text-center">Personal Finance Visualizer</h1>
-      <TransactionForm
-        onSubmit={handleAddOrEdit}
-        initialData={editing}
-      />
-      <MonthlyExpensesChart data={monthlyData} />
-      {transactions && <SummaryCards transactions={transactions} />}
+    <div
+      className=""
+      style={{
+        backgroundImage: `url(${pic.src})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      <main className="max-w-8xl mx-auto p-4 space-y-6 bg-white/80 backdrop-blur rounded-xl shadow-lg">
+        <h1 className="text-5xl font-bold text-center">Personal Finance Visualizer</h1>
 
-      <CategoryPieChart transactions={transactions} />
-      {transactions ? (
-        <TransactionList
-          transactions={transactions}
-          onDelete={handleDelete}
-          onEdit={(tx) => setEditing(tx)}
-        />
-      ) : (
-        <div>Loading...</div>
-      )}
-    </main>
+        {/* Row 1: TransactionForm + SummaryCards */}
+        <div className="mt-4 flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <TransactionForm onSubmit={handleAddOrEdit} initialData={editing} />
+          </div>
+          <div className="flex-1">
+            {transactions && <SummaryCards transactions={transactions} />}
+          </div>
+        </div>
+
+        {/* Row 2: MonthlyExpensesChart + CategoryPieChart */}
+        <div className="flex flex-col md:flex-row gap-4">
+          <div className="flex-1">
+            <MonthlyExpensesChart data={monthlyData} />
+          </div>
+          <div className="flex-1">
+            <CategoryPieChart transactions={transactions} />
+          </div>
+        </div>
+
+        {/* Transaction list at the bottom */}
+        {transactions ? (
+          <TransactionList
+            transactions={transactions}
+            onDelete={handleDelete}
+            onEdit={(tx) => setEditing(tx)}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
+      </main>
+    </div>
   );
+
 }
