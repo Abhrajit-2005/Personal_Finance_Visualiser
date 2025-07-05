@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+🧮 Personal Finance Visualizer
 
-## Getting Started
+A modern personal finance dashboard built with Next.js, MongoDB, and Tailwind CSS, helping you track your transactions, visualize expenses, and manage budgets with interactive charts.
 
-First, run the development server:
+🚀 Features
+✅ Add, edit, and delete personal transactions
+✅ Categorize transactions (Food, Rent, Entertainment, etc.)
+✅ Interactive charts with Recharts (monthly expenses, category breakdown)
+✅ Budget tracking with budgets CRUD
+✅ Clean and modern UI with Tailwind
+✅ Responsive and mobile-friendly
+✅ Serverless API routes for data persistence
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+📦 Tech Stack
+1. Next.js (App Router)
+2. MongoDB (via Mongoose)
+3. Tailwind CSS
+4. Recharts (for visualizations)
+5. SWR (for client-side data fetching)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🛠️ Setup Instructions
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/Abhrajit-2005/Personal_Finance_Visualiser.git
+    cd personal-finance-visualizer
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. Install dependencies:
+   ```bash
+    npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Configure environment variables - Create a .env.local file at the root and add:
+    ```env
+    MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/your-db-name?retryWrites=true&w=majority
 
-## Learn More
+4. Run the development server:
+   ```bash
+    npm run dev
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Then open http://localhost:3000 in your browser.
