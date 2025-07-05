@@ -5,6 +5,8 @@ import TransactionForm from "@/components/TransactionForm";
 import TransactionList from "@/components/TransactionList";
 import dynamic from "next/dynamic";
 import pic from "../../public/pic.png"
+import BudgetList from "@/components/BudgetList";
+import BudgetForm from "@/components/BudgetForm";
 
 const MonthlyExpensesChart = dynamic(() => import("@/components/MonthlyExpensesChart"), { ssr: false });
 const CategoryPieChart = dynamic(() => import("@/components/CategoryPieChart"), { ssr: false });
@@ -16,8 +18,29 @@ const fetcher = (url) => fetch(url).then((res) => res.json());
 
 export default function Home() {
   const { data: transactions, mutate } = useSWR("/api/transactions", fetcher);
+  const { data: budgets, mutate: mutateBudgets } = useSWR("/api/budgets", fetcher);
 
   const [editing, setEditing] = useState(null);
+  const [editingBudget, setEditingBudget] = useState(null);
+
+  const handleAddOrEditBudget = async (data) => {
+    if (editingBudget) {
+      await fetch(`/api/budgets/${editingBudget._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setEditingBudget(null);
+    } else {
+      await fetch("/api/budgets", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+    }
+    mutateBudgets();
+  };
+
 
   const handleAddOrEdit = async (data) => {
     if (editing) {
@@ -67,7 +90,7 @@ export default function Home() {
       }}
     >
       <main className="max-w-8xl mx-auto p-4 space-y-6 bg-white/80 backdrop-blur rounded-xl shadow-lg">
-        <h1 className="text-5xl font-bold text-center">Personal Finance Visualizer</h1>
+        <h1 className="text-6xl font-bold text-center">Personal Finance Visualizer</h1>
 
         {/* Row 1: TransactionForm + SummaryCards */}
         <div className="mt-4 flex flex-col md:flex-row gap-4">
@@ -88,6 +111,30 @@ export default function Home() {
             <CategoryPieChart transactions={transactions} />
           </div>
         </div>
+
+
+        {/* Row 3: BudgetForm + BudgetList */}
+        <section className="space-y-4 mt-8">
+          <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-teal-400">
+            Monthly Budgets
+          </h2>
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex-1/2">
+              <BudgetForm onSubmit={handleAddOrEditBudget} initialData={editingBudget} />
+            </div>
+            <div className="flex-1/2">
+              <BudgetList
+                budgets={budgets}
+                onEdit={(b) => setEditingBudget(b)}
+                onDelete={async (id) => {
+                  await fetch(`/api/budgets/${id}`, { method: "DELETE" });
+                  mutateBudgets();
+                }}
+              />
+            </div>
+          </div>
+        </section>
+
 
         {/* Transaction list at the bottom */}
         {transactions ? (

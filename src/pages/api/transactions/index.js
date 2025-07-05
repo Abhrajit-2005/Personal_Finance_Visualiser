@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     await dbConnect();
 
     if (req.method === "GET") {
-        const transactions = await Transaction.find().sort({ date: -1 });
+        const transactions = await Transaction.find().sort();
         return res.status(200).json(transactions);
     }
 
