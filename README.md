@@ -28,7 +28,7 @@ A modern personal finance dashboard built with Next.js, MongoDB, and Tailwind CS
    ```bash
     npm install
 
-3. Configure environment variables - Create a .env.local file at the root and add:
+3. Configure environment variables - Create a .env.local file at the root and add your own MONGODB_URI:
     ```env
     MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.mongodb.net/your-db-name?retryWrites=true&w=majority
 
