@@ -1,68 +1,79 @@
+"use client";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function TransactionForm({ onSubmit, initialData }) {
     const [amount, setAmount] = useState(initialData?.amount || "");
-    const [date, setDate] = useState(initialData?.date || "");
     const [description, setDescription] = useState(initialData?.description || "");
-    const [errors, setErrors] = useState({});
+    const [date, setDate] = useState(initialData?.date?.slice(0, 10) || "");
+    const [category, setCategory] = useState(initialData?.category || "Other");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newErrors = {};
-
-        if (!amount || isNaN(amount) || Number(amount) <= 0) {
-            newErrors.amount = "Please enter a valid amount greater than zero";
+        if (!amount || !description || !date) {
+            alert("Please fill all fields");
+            return;
         }
-
-        if (!date) {
-            newErrors.date = "Please select a date";
-        }
-
-        if (!description.trim()) {
-            newErrors.description = "Description cannot be empty";
-        }
-
-        setErrors(newErrors);
-
-        if (Object.keys(newErrors).length === 0) {
-            onSubmit({ amount: Number(amount), date, description });
+        onSubmit({
+            amount: parseFloat(amount),
+            description,
+            date,
+            category,
+        });
+        // clear form if adding (not editing)
+        if (!initialData) {
+            setAmount("");
+            setDescription("");
+            setDate("");
+            setCategory("Other");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-2 p-4 border rounded shadow">
+        <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-                <label>Amount</label>
-                <input
+                <Label>Amount</Label>
+                <Input
                     type="number"
-                    className="border p-1 w-full"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                 />
-                {errors.amount && <p className="text-red-500 text-sm">{errors.amount}</p>}
             </div>
             <div>
-                <label>Date</label>
-                <input
-                    type="date"
-                    className="border p-1 w-full"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                />
-                {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
-            </div>
-            <div>
-                <label>Description</label>
-                <input
+                <Label>Description</Label>
+                <Input
                     type="text"
-                    className="border p-1 w-full"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
             </div>
-            <Button type="submit">Save</Button>
+            <div>
+                <Label>Date</Label>
+                <Input
+                    type="date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                />
+            </div>
+            <div>
+                <Label>Category</Label>
+                <select
+                    className="border rounded p-2 w-full"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                >
+                    <option value="Food">Food</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <Button type="submit">
+                {initialData ? "Update" : "Add"} Transaction
+            </Button>
         </form>
     );
 }

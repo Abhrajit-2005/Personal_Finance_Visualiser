@@ -4,6 +4,9 @@ import useSWR from "swr";
 import TransactionForm from "@/components/TransactionForm";
 import TransactionList from "@/components/TransactionList";
 import MonthlyExpensesChart from "@/components/MonthlyExpensesChart";
+import CategoryPieChart from "@/components/CategoryPieChart";
+import SummaryCards from "@/components/SummaryCards";
+
 
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
@@ -58,6 +61,9 @@ export default function Home() {
         initialData={editing}
       />
       <MonthlyExpensesChart data={monthlyData} />
+      {transactions && <SummaryCards transactions={transactions} />}
+
+      <CategoryPieChart transactions={transactions} />
       {transactions ? (
         <TransactionList
           transactions={transactions}

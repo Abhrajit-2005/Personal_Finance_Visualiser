@@ -7,10 +7,10 @@ export default async function handler(req, res) {
 
     if (req.method === "PUT") {
         try {
-            const { amount, date, description } = req.body;
+            const { amount, date, description, category } = req.body;
             const updated = await Transaction.findByIdAndUpdate(
                 id,
-                { amount, date, description },
+                { amount, date, description, category },
                 { new: true }
             );
             return res.status(200).json(updated);

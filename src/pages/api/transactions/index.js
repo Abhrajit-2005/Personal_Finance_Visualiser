@@ -12,11 +12,12 @@ export default async function handler(req, res) {
 
     if (req.method === "POST") {
         try {
-            const { amount, date, description } = req.body;
+            const { amount, date, description, category } = req.body;
             const transaction = await Transaction.create({
                 amount,
                 date,
                 description,
+                category
             });
             return res.status(201).json(transaction);
         } catch (err) {
