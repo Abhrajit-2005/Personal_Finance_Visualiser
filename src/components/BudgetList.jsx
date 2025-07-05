@@ -10,6 +10,13 @@ export default function BudgetList({ budgets, onEdit, onDelete }) {
             </div>
         );
     }
+    const handleDeleteBudget = async (id) => {
+        await fetch(`/api/budgets?id=${id}`, {
+            method: "DELETE",
+        });
+        mutateBudgets();
+    };
+
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

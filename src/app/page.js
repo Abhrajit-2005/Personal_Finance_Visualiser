@@ -68,6 +68,13 @@ export default function Home() {
     });
     mutate();
   };
+  const handleDeleteBudget = async (id) => {
+    await fetch(`/api/budgets?id=${id}`, {
+      method: "DELETE",
+    });
+    mutateBudgets();
+  };
+
 
   const monthlyData = transactions
     ? transactions.reduce((acc, tx) => {
@@ -124,10 +131,7 @@ export default function Home() {
               <BudgetList
                 budgets={budgets}
                 onEdit={(b) => setEditingBudget(b)}
-                onDelete={async (id) => {
-                  await fetch(`/api/budgets/${id}`, { method: "DELETE" });
-                  mutateBudgets();
-                }}
+                onDelete={handleDeleteBudget}
               />
             </div>
           </div>
