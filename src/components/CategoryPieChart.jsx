@@ -19,7 +19,6 @@ export default function CategoryPieChart({ transactions }) {
         );
     }
 
-    // prepare category totals
     const data = transactions.reduce((acc, tx) => {
         const found = acc.find((d) => d.name === tx.category);
         if (found) {

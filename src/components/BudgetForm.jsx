@@ -1,4 +1,3 @@
-// src/components/BudgetForm.jsx
 "use client";
 
 import { useState } from "react";
@@ -22,7 +21,6 @@ export default function BudgetForm({ onSubmit, initialData }) {
             amount: parseFloat(amount),
             month,
         });
-        // clear form if adding new
         if (!initialData) {
             setCategory("Other");
             setAmount("");

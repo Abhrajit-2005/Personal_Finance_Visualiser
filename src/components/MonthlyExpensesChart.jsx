@@ -38,8 +38,8 @@ export default function MonthlyBarChart({ data }) {
                     />
                     <Bar
                         dataKey="total"
-                        fill="#6366f1" // indigo
-                        radius={[8, 8, 0, 0]} // rounded tops
+                        fill="#6366f1"
+                        radius={[8, 8, 0, 0]}
                     />
                 </BarChart>
             </ResponsiveContainer>

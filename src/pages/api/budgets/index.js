@@ -1,4 +1,3 @@
-// src/app/api/budgets/route.js
 import dbConnect from "@/lib/dbConnect";
 import Budget from "@/lib/models/Budget";
 

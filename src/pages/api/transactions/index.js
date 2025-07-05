@@ -1,4 +1,3 @@
-// src/pages/api/transactions/index.js
 import dbConnect from "@/lib/dbConnect";
 import Transaction from "@/lib/models/Transaction";
 

@@ -7,6 +7,8 @@ import dynamic from "next/dynamic";
 import pic from "../../public/pic.png"
 import BudgetList from "@/components/BudgetList";
 import BudgetForm from "@/components/BudgetForm";
+import BudgetVsActualChart from "@/components/BudgetVsActualChart";
+import SpendingInsights from "@/components/SpendingInsights";
 
 const MonthlyExpensesChart = dynamic(() => import("@/components/MonthlyExpensesChart"), { ssr: false });
 const CategoryPieChart = dynamic(() => import("@/components/CategoryPieChart"), { ssr: false });
@@ -92,7 +94,6 @@ export default function Home() {
       <main className="max-w-8xl mx-auto p-4 space-y-6 bg-white/80 backdrop-blur rounded-xl shadow-lg">
         <h1 className="text-6xl font-bold text-center">Personal Finance Visualizer</h1>
 
-        {/* Row 1: TransactionForm + SummaryCards */}
         <div className="mt-4 flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <TransactionForm onSubmit={handleAddOrEdit} initialData={editing} />
@@ -102,7 +103,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Row 2: MonthlyExpensesChart + CategoryPieChart */}
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <MonthlyExpensesChart data={monthlyData} />
@@ -112,8 +112,6 @@ export default function Home() {
           </div>
         </div>
 
-
-        {/* Row 3: BudgetForm + BudgetList */}
         <section className="space-y-4 mt-8">
           <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-teal-400">
             Monthly Budgets
@@ -135,8 +133,18 @@ export default function Home() {
           </div>
         </section>
 
+        <BudgetVsActualChart
+          budgets={budgets}
+          transactions={transactions}
+          selectedMonth={"2025-07"}
+        />
 
-        {/* Transaction list at the bottom */}
+        <SpendingInsights
+          budgets={budgets}
+          transactions={transactions}
+          selectedMonth={"2025-07"}
+        />
+
         {transactions ? (
           <TransactionList
             transactions={transactions}

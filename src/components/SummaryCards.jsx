@@ -27,7 +27,6 @@ export default function SummaryCards({ transactions }) {
 
     const totalExpenses = transactions.reduce((sum, tx) => sum + tx.amount, 0);
 
-    // get totals by category
     const categoryTotals = transactions.reduce((acc, tx) => {
         acc[tx.category] = (acc[tx.category] || 0) + tx.amount;
         return acc;
@@ -47,7 +46,6 @@ export default function SummaryCards({ transactions }) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* total expenses */}
             <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-indigo-500/30 to-indigo-900/20 border border-white/30 hover:scale-105 transition">
                 <div className="flex items-center space-x-3">
                     <ArrowDownRight className="text-indigo-600" size={32} />
@@ -60,7 +58,6 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            {/* biggest category */}
             <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-yellow-500/30 to-yellow-900/20 border border-white/30 hover:scale-105 transition">
                 <div className="flex items-center space-x-3">
                     <PieChart className="text-yellow-600" size={32} />
@@ -75,7 +72,6 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            {/* most recent */}
             <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-pink-500/30 to-pink-900/20 border border-white/30 hover:scale-105 transition">
                 <div className="flex items-center space-x-3">
                     <Clock className="text-pink-600" size={32} />
@@ -91,7 +87,6 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            {/* category-wise transaction count with mini BarChart */}
             <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-green-500/30 to-green-900/20 border border-white/30 hover:scale-105 transition">
                 <p className="text-gray-700 text-sm mb-2">Transactions per Category</p>
                 <div className="h-32">
@@ -122,7 +117,6 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            {/* highest single expense */}
             <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-red-500/30 to-red-900/20 border border-white/30 hover:scale-105 transition">
                 <div>
                     <p className="text-gray-700 text-sm mb-2">Highest Expense</p>
@@ -132,7 +126,6 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            {/* average transaction with sparkline */}
             <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-purple-500/30 to-purple-900/20 border border-white/30 hover:scale-105 transition">
                 <p className="text-gray-700 text-sm mb-2">Avg. Transaction</p>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">

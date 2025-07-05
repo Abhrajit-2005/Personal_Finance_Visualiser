@@ -1,4 +1,3 @@
-// src/components/BudgetList.jsx
 "use client";
 
 import { Trash, Edit3 } from "lucide-react";

@@ -21,7 +21,6 @@ export default function TransactionList({ transactions, onDelete, onEdit }) {
                         key={tx._id}
                         className="flex justify-between items-center rounded-xl p-3 bg-gradient-to-br from-white/70 to-gray-100/50 backdrop-blur shadow hover:shadow-xl transition hover:scale-[1.01] border border-gray-300"
                     >
-                        {/* left aligned: all info in one line */}
                         <div className="flex flex-wrap md:flex-nowrap gap-6 items-center text-lg md:text-base text-gray-800">
                             <span className="font-bold text-indigo-700">₹{tx.amount}</span>
                             <span className="truncate max-w-[150px] md:max-w-xs">{tx.description}</span>
@@ -35,7 +34,6 @@ export default function TransactionList({ transactions, onDelete, onEdit }) {
                             <span className="text-purple-700 font-medium">({tx.category})</span>
                         </div>
 
-                        {/* right aligned: action buttons */}
                         <div className="flex space-x-2">
                             <Button size="sm" onClick={() => onEdit(tx)}>
                                 <Pencil className="h-4 w-4 mr-1" /> Edit
