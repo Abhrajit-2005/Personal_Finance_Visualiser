@@ -13,13 +13,13 @@ export default function TransactionList({ transactions, onDelete, onEdit }) {
     }
 
     return (
-        <div className="mt-10">
-            <h2 className="text-5xl font-bold mb-4 text-center">Your Transactions</h2>
-            <div className="space-y-2">
+        <div className="mt-2">
+            <h2 className="p-6 text-4xl font-bold mb-4 text-center">Your Transactions</h2>
+            <div className="space-y-2 space-x-2 mx-4">
                 {transactions.map((tx) => (
                     <div
                         key={tx._id}
-                        className="flex justify-between items-center rounded-xl p-3 bg-gradient-to-br from-white/70 to-gray-100/50 backdrop-blur shadow hover:shadow-xl transition hover:scale-[1.01] border border-gray-300"
+                        className="flex justify-between items-center rounded-xl p-3 mb-6 bg-gradient-to-br from-white/70 to-gray-100/50 backdrop-blur shadow hover:shadow-xl transition hover:scale-[1.01] border border-gray-300"
                     >
                         <div className="flex flex-wrap md:flex-nowrap gap-6 items-center text-lg md:text-base text-gray-800">
                             <span className="font-bold text-indigo-700">₹{tx.amount}</span>

@@ -3,18 +3,19 @@ import Transaction from "@/lib/models/Transaction";
 
 export default async function handler(req, res) {
     console.log("Transactions API called with method:", req.method);
-
-    await dbConnect()
-        .then(() => console.log("✅ MongoDB connected successfully"))
-        .catch((err) => {
-            console.error("❌ MongoDB connection failed:", err.message);
-            return res.status(500).json({ error: "Database connection failed" });
-        });
+    await dbConnect();
 
     if (req.method === "GET") {
         try {
-            const transactions = await Transaction.find();
-            console.log(`✅ Found ${transactions.length} transactions`);
+            const { userId } = req.query;
+
+            // Optionally validate userId
+            if (!userId) {
+                return res.status(400).json({ error: "Missing userId in query" });
+            }
+
+            const transactions = await Transaction.find({ userId });
+            console.log(`✅ Found ${transactions.length} transactions for user: ${userId}`);
             return res.status(200).json(transactions);
         } catch (err) {
             console.error("❌ GET error:", err.message);

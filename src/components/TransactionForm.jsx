@@ -1,17 +1,12 @@
-"use client";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-// import { Card, CardContent } from "@/components/ui/card";
-// import { cn } from "@/lib/utils";
-
+import { useState } from 'react';
+import { DollarSign, Calendar, Tag, FileText, TrendingUp, Sparkles } from 'lucide-react';
 
 export default function TransactionForm({ onSubmit, initialData }) {
     const [amount, setAmount] = useState(initialData?.amount || "");
     const [description, setDescription] = useState(initialData?.description || "");
     const [date, setDate] = useState(initialData?.date?.slice(0, 10) || "");
     const [category, setCategory] = useState(initialData?.category || "Other");
+    const [focusedField, setFocusedField] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -33,63 +28,206 @@ export default function TransactionForm({ onSubmit, initialData }) {
         }
     };
 
+    const categoryIcons = {
+        'Food': '🍽️',
+        'Rent': '🏠',
+        'Entertainment': '🎬',
+        'Utilities': '⚡',
+        'Other': '📦'
+    };
+
+    const categoryColors = {
+        'Food': 'from-orange-500 to-red-500',
+        'Rent': 'from-blue-500 to-indigo-500',
+        'Entertainment': 'from-pink-500 to-purple-500',
+        'Utilities': 'from-yellow-500 to-orange-500',
+        'Other': 'from-gray-500 to-slate-500'
+    };
+
     return (
-        <div className="backdrop-blur-md bg-white/20 dark:bg-gray-800/20 rounded-2xl shadow-xl p-6 border border-white/30 dark:border-gray-700 transition hover:shadow-2xl">
-            <h2 className="text-2xl font-extrabold text-indigo-600 dark:text-teal-400 mb-4 tracking-tight">
-                {initialData ? "Edit Transaction" : "Add Transaction"}
-            </h2>
-            <form onSubmit={handleSubmit} className="space-y-4 text-slate-800 dark:text-slate-200">
-                <div className="space-y-1">
-                    <Label className="font-semibold">Amount (₹)</Label>
-                    <Input
-                        type="number"
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        placeholder="e.g. 1200"
-                        className="bg-white/40 dark:bg-gray-900/40 backdrop-blur rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-teal-400 transition"
-                    />
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center p-4 bg-rounded-xl">
+
+            <form
+                onSubmit={handleSubmit}
+                className="relative z-10 rounded-3xl shadow-2xl p-8 backdrop-blur-xl bg-white/10 border border-white/20 space-y-8 w-full max-w-xl mx-auto transition-all duration-500 hover:shadow-indigo-500/25 hover:scale-[1.02] group"
+                style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+                }}
+            >
+                {/* Header */}
+                <div className="text-center space-y-2">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-4 group-hover:rotate-12 transition-transform duration-300">
+                        <TrendingUp className="w-8 h-8 text-white" />
+                    </div>
+                    <h2 className="text-3xl font-black bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
+                        {initialData ? "Edit Transaction" : "Add Transaction"}
+                    </h2>
+                    <p className="text-white/60 text-sm">Track your expenses with precision</p>
                 </div>
-                <div className="space-y-1">
-                    <Label className="font-semibold">Description</Label>
-                    <Input
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="e.g. Grocery shopping"
-                        className="bg-white/40 dark:bg-gray-900/40 backdrop-blur rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-teal-400 transition"
-                    />
+
+                {/* Amount Field */}
+                <div className="relative group/field">
+                    <div className="absolute -top-3 left-4 z-10">
+                        <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                            <DollarSign className="w-3 h-3 inline mr-1" />
+                            Amount
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <input
+                            type="number"
+                            value={amount}
+                            onChange={(e) => setAmount(e.target.value)}
+                            placeholder="e.g. 1200"
+                            className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'amount'
+                                ? 'border-green-400 shadow-lg shadow-green-500/25'
+                                : 'border-white/20 hover:border-white/40'
+                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 group-hover/field:bg-white/10`}
+                            onFocus={() => setFocusedField('amount')}
+                            onBlur={() => setFocusedField('')}
+                        />
+                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-green-400 font-bold text-lg">
+                            ₹
+                        </div>
+                        {amount && (
+                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-green-400">
+                                <div className="w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="space-y-1">
-                    <Label className="font-semibold">Date</Label>
-                    <Input
-                        type="date"
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="bg-white/40 dark:bg-gray-900/40 backdrop-blur rounded-xl border border-slate-300 dark:border-slate-700 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-teal-400 transition"
-                    />
+
+                {/* Description Field */}
+                <div className="relative group/field">
+                    <div className="absolute -top-3 left-4 z-10">
+                        <div className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                            <FileText className="w-3 h-3 inline mr-1" />
+                            Description
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <input
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="e.g. Grocery shopping"
+                            className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'description'
+                                ? 'border-blue-400 shadow-lg shadow-blue-500/25'
+                                : 'border-white/20 hover:border-white/40'
+                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 group-hover/field:bg-white/10`}
+                            onFocus={() => setFocusedField('description')}
+                            onBlur={() => setFocusedField('')}
+                        />
+                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-400">
+                            <FileText className="w-5 h-5" />
+                        </div>
+                        {description && (
+                            <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-400 text-xs font-medium">
+                                {description.length}/50
+                            </div>
+                        )}
+                    </div>
                 </div>
-                <div className="space-y-1">
-                    <Label className="font-semibold">Category</Label>
-                    <select
-                        className="w-full bg-white/40 dark:bg-gray-900/40 backdrop-blur rounded-xl border border-slate-300 dark:border-slate-700 p-2 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-teal-400 transition"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                    >
-                        <option value="Food">Food</option>
-                        <option value="Rent">Rent</option>
-                        <option value="Entertainment">Entertainment</option>
-                        <option value="Utilities">Utilities</option>
-                        <option value="Other">Other</option>
-                    </select>
+
+                {/* Date Field */}
+                <div className="relative group/field">
+                    <div className="absolute -top-3 left-4 z-10">
+                        <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                            <Calendar className="w-3 h-3 inline mr-1" />
+                            Date
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)}
+                            className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'date'
+                                ? 'border-purple-400 shadow-lg shadow-purple-500/25'
+                                : 'border-white/20 hover:border-white/40'
+                                } rounded-2xl text-white focus:outline-none transition-all duration-300 group-hover/field:bg-white/10`}
+                            onFocus={() => setFocusedField('date')}
+                            onBlur={() => setFocusedField('')}
+                        />
+                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-400">
+                            <Calendar className="w-5 h-5" />
+                        </div>
+                    </div>
                 </div>
-                <div className="text-right">
-                    <Button
+
+                {/* Category Field */}
+                <div className="relative group/field">
+                    <div className="absolute -top-3 left-4 flex items-center space-x-2 z-10">
+                        <div className={`bg-gradient-to-r ${categoryColors[category]} text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg transition-all duration-300`}>
+                            <Tag className="w-3 h-3 inline mr-1" />
+                            Category
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <select
+                            className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'category'
+                                ? `border-${category === 'Food' ? 'orange' : category === 'Rent' ? 'blue' : category === 'Entertainment' ? 'pink' : category === 'Utilities' ? 'yellow' : 'gray'}-400 shadow-lg shadow-${category === 'Food' ? 'orange' : category === 'Rent' ? 'blue' : category === 'Entertainment' ? 'pink' : category === 'Utilities' ? 'yellow' : 'gray'}-500/25`
+                                : 'border-white/20 hover:border-white/40'
+                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 appearance-none cursor-pointer group-hover/field:bg-white/10`}
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            onFocus={() => setFocusedField('category')}
+                            onBlur={() => setFocusedField('')}
+                        >
+                            <option value="Food" className="bg-slate-800 text-white">🍽️ Food</option>
+                            <option value="Rent" className="bg-slate-800 text-white">🏠 Rent</option>
+                            <option value="Entertainment" className="bg-slate-800 text-white">🎬 Entertainment</option>
+                            <option value="Utilities" className="bg-slate-800 text-white">⚡ Utilities</option>
+                            <option value="Other" className="bg-slate-800 text-white">📦 Other</option>
+                        </select>
+                        <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl">
+                            {categoryIcons[category]}
+                        </div>
+                        <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 pointer-events-none">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="pt-4">
+                    <button
                         type="submit"
-                        className="bg-indigo-600 dark:bg-teal-500 hover:bg-indigo-700 dark:hover:bg-teal-600 text-white font-semibold px-6 py-2 rounded-xl transition"
+                        className="relative w-full py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 overflow-hidden group/btn"
                     >
-                        {initialData ? "Update" : "Add"} Transaction
-                    </Button>
+                        <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                        <div className="relative z-10 flex items-center justify-center space-x-2">
+                            <span className="text-lg">
+                                {initialData ? "Update" : "Add"} Transaction
+                            </span>
+                            <div className="w-5 h-5 border-2 border-white rounded-full flex items-center justify-center group-hover/btn:rotate-180 transition-transform duration-300">
+                                <div className="w-2 h-2 bg-white rounded-full group-hover/btn:scale-150 transition-transform duration-300"></div>
+                            </div>
+                        </div>
+
+                        {/* Shine effect */}
+                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                    </button>
                 </div>
+
+                {/* Quick Stats Preview */}
+                {amount && (
+                    <div className="pt-4 border-t border-white/10">
+                        <div className="flex items-center justify-between text-white/80 text-sm">
+                            <div className="flex items-center space-x-2">
+                                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                <span>Amount: ₹{amount}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <span className="text-2xl">{categoryIcons[category]}</span>
+                                <span>{category}</span>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </form>
         </div>
     );
