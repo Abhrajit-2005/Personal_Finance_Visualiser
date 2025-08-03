@@ -8,19 +8,19 @@ import {
     ResponsiveContainer,
     Tooltip,
 } from "recharts";
+import { DollarSign } from "lucide-react";
 
 export default function SummaryCards({ transactions }) {
     if (!transactions || transactions.length === 0) {
         return (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[1, 2, 3, 4, 5, 6].map((i) => (
-                    <div
-                        key={i}
-                        className="rounded-2xl p-4 shadow-xl backdrop-blur bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700"
-                    >
-                        <p className="text-gray-500 text-center">No data yet</p>
+            <div className="text-center py-16 px-4">
+                <div className="max-w-md mx-auto">
+                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
+                        <DollarSign className="h-12 w-12 text-indigo-600" />
                     </div>
-                ))}
+                    <h2 className="text-3xl font-bold text-gray-900 mb-3">No Transactions Yet</h2>
+                    <p className="text-gray-600">Start tracking your expenses by adding your first transaction.</p>
+                </div>
             </div>
         );
     }

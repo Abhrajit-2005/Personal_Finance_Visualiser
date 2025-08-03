@@ -13,9 +13,12 @@ const COLORS = ["#6366f1", "#14b8a6", "#f59e0b", "#ef4444", "#a855f7"];
 export default function CategoryPieChart({ transactions }) {
     if (!transactions || transactions.length === 0) {
         return (
-            <p className="text-center text-gray-500 dark:text-gray-400">
-                No data for pie chart.
-            </p>
+            <div className="text-center py-16 px-4">
+                <div className="max-w-md mx-auto">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-3">No Data Available</h2>
+                    <p className="text-gray-600">Start tracking your expenses to see monthly trends.</p>
+                </div>
+            </div>
         );
     }
 

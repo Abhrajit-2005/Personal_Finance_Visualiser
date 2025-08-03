@@ -3,13 +3,15 @@
 import { useState } from "react";
 import { Trash, Edit3, Calendar, DollarSign, X, Save } from "lucide-react";
 
-export default function BudgetList({ budgets, onEdit, onDelete, onUpdate }) {
+export default function BudgetList({ transactions, budgets, onEdit, onDelete, onUpdate }) {
     const [editingBudget, setEditingBudget] = useState(null);
     const [editForm, setEditForm] = useState({
         category: '',
         amount: '',
         month: ''
     });
+    console.log(transactions, budgets);
+
 
     if (!budgets || budgets.length === 0) {
         return (
@@ -49,7 +51,7 @@ export default function BudgetList({ budgets, onEdit, onDelete, onUpdate }) {
                     month: editForm.month
                 };
 
-                console.log('Updating budget:', updatedBudget);
+                // console.log('Updating budget:', updatedBudget);
 
                 await onUpdate(updatedBudget); // ✅ Call the actual update function
 
@@ -71,8 +73,7 @@ export default function BudgetList({ budgets, onEdit, onDelete, onUpdate }) {
     };
 
     const getBudgetProgress = (budget) => {
-        // This would typically come from your spending data
-        // For demo purposes, using a random percentage
+
         return Math.floor(Math.random() * 100);
     };
 

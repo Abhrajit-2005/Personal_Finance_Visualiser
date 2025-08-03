@@ -2,7 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import Transaction from "@/lib/models/Transaction";
 
 export default async function handler(req, res) {
-    console.log("Transactions API called with method:", req.method);
+    // console.log("Transactions API called with method:", req.method);
     await dbConnect();
 
     if (req.method === "GET") {

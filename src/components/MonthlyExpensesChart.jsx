@@ -10,6 +10,16 @@ import {
 } from "recharts";
 
 export default function MonthlyBarChart({ data }) {
+    if (!data || data.length === 0) {
+        return (
+            <div className="text-center py-16 px-4">
+                <div className="max-w-md mx-auto">
+                    <h2 className="text-3xl font-bold text-gray-900 mb-3">No Data Available</h2>
+                    <p className="text-gray-600">Start tracking your expenses to see monthly trends.</p>
+                </div>
+            </div>
+        );
+    }
     return (
         <div className="rounded-2xl shadow-xl p-4 backdrop-blur bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700">
             <h2 className="text-xl font-bold mb-4 text-indigo-600 dark:text-teal-400">Monthly Expenses</h2>

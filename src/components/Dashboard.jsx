@@ -331,6 +331,7 @@ export default function Home() {
                         </div>
                         <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
                             <BudgetList
+                                transactions={transactions}
                                 budgets={budgets}
                                 onEdit={(b) => setEditingBudget(b)}
                                 onDelete={handleDeleteBudget}

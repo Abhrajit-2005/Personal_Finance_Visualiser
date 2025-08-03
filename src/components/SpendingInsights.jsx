@@ -8,10 +8,10 @@ export default function SpendingInsights({ budgets, transactions, selectedMonth 
             </div>
         );
     }
-    console.log("Hello Budgets:", budgets);
-    console.log("Selected Month:", selectedMonth);
+    // console.log("Hello Budgets:", budgets);
+    // console.log("Selected Month:", selectedMonth);
 
-    console.log("Filtered Budgets:", budgets.filter((b) => b.month === selectedMonth));
+    // console.log("Filtered Budgets:", budgets.filter((b) => b.month === selectedMonth));
 
     const insights = budgets
         .filter((b) => b.month === selectedMonth)
