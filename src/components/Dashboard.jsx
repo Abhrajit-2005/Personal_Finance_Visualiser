@@ -41,43 +41,46 @@ export default function Home() {
     const [editing, setEditing] = useState(null);
     const [editingBudget, setEditingBudget] = useState(null);
 
-    const handleAddOrEditBudget = async (data) => {
+    const handleAddBudget = async (data) => {
         const payload = { ...data, userId };
-        if (editingBudget) {
-            await fetch(`/api/budgets/${editingBudget._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-            setEditingBudget(null);
-        } else {
-            await fetch("/api/budgets", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-        }
+        await fetch("/api/budgets", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+
         mutateBudgets();
     };
 
-    const handleAddOrEdit = async (data) => {
+    const handleUpdateBudget = async (updatedBudget) => {
+        await fetch(`/api/budgets/${updatedBudget._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...updatedBudget, userId }),
+        });
+
+        mutateBudgets(); // revalidate data
+    }
+
+    const handleAdd = async (data) => {
         const payload = { ...data, userId };
-        if (editing) {
-            await fetch(`/api/transactions/${editing._id}`, {
-                method: "PUT",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-            setEditing(null);
-        } else {
-            await fetch("/api/transactions", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-        }
+        await fetch("/api/transactions", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+        });
+
         mutate();
     };
+    const handleUpdate = async (updatedTx) => {
+        await fetch(`/api/transactions/${updatedTx._id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ ...updatedTx, userId }),
+        });
+        mutate(); // revalidate data
+    };
+
 
     const handleDelete = async (id) => {
         await fetch(`/api/transactions/${id}`, {
@@ -87,7 +90,7 @@ export default function Home() {
     };
 
     const handleDeleteBudget = async (id) => {
-        await fetch(`/api/budgets?id=${id}`, {
+        await fetch(`/api/budgets/${id}`, {
             method: "DELETE",
         });
         mutateBudgets();
@@ -107,29 +110,87 @@ export default function Home() {
         : [];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-300 via-purple-200 to-teal-300 py-12 px-4 sm:px-6 lg:px-8">
-            <main className="max-w-8xl mx-auto p-8 space-y-12 bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 transition-all duration-500">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-400 to-teal-500 py-12 px-4 sm:px-6 lg:px-8">
+            <main className="max-w-8xl mx-auto p-8 space-y-10 bg-white/10 backdrop-blur-2xl rounded-3xl shadow-2xl border border-white/20 transition-all duration-500">
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row justify-between items-center border-b border-white/30">
-                    <h1 className="p-4 text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-700 to-purple-700">
-                        Welcome, {username} ✨
-                    </h1>
-                    <div className="mt-4 md:mt-0">
-                        <UserButton afterSwitchSessionUrl="/" appearance={{
-                            elements: {
-                                userButton: {
-                                    width: '64px', // Default is ~32px, increase as needed
-                                    height: '64px',
-                                },
-                            },
-                        }} />
+                <div className="relative overflow-hidden">
+                    {/* Background decorative elements */}
+                    <div className="absolute inset-0 bg-slate-950 rounded-t-3xl"></div>
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-indigo-400/20 rounded-full blur-3xl animate-pulse"></div>
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-purple-400/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
+
+                    {/* User button positioned at top-right */}
+                    <div className="absolute top-4 right-4 lg:top-6 lg:right-6 z-20">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 to-purple-400 rounded-full blur-xl opacity-30 animate-pulse"></div>
+
+                            <UserButton
+                                afterSwitchSessionUrl="/"
+                                appearance={{
+                                    elements: {
+                                        userButton: {
+                                            width: '50px',
+                                            height: '50px',
+                                        },
+                                        userButtonAvatarBox: {
+                                            width: '52px',
+                                            height: '52px',
+                                        },
+                                    },
+                                }}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Main header content */}
+                    <div className="relative flex flex-col justify-start items-start p-6 lg:p-8 pr-20 lg:pr-24 border-b border-white/30 space-y-6">
+                        {/* Welcome text and user info */}
+                        <div className="w-full space-y-2">
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
+                                <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-clip-text bg-amber-600 leading-tight">
+                                    Welcome, {username}!
+                                </h1>
+                                <div className="flex items-center space-x-2">
+                                    <span className="text-2xl sm:text-3xl animate-bounce">✨</span>
+                                </div>
+                            </div>
+
+                            {/* Subtitle */}
+                            <p className="text-sm sm:text-base lg:text-lg text-white font-medium max-w-2xl leading-relaxed">
+                                Take control of your finances with smart budgeting and expense tracking
+                            </p>
+
+                            {/* Quick stats or current date */}
+                            <div className="flex flex-wrap items-center gap-4 mt-4">
+                                <div className="flex items-center space-x-2 bg-white/50 backdrop-blur-lg rounded-full px-2 py-1 text-sm font-medium text-white">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span>{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                                </div>
+
+                                {transactions && (
+                                    <div className="flex items-center space-x-2 bg-white/50 backdrop-blur-lg rounded-full px-3 py-1 text-sm font-medium text-white">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                        </svg>
+                                        <span>{transactions.length} Transactions</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                {/* Floating elements for visual interest */}
+                {/* <div className="absolute bottom-0 left-1/4 w-16 h-16 bg-teal-400/10 rounded-full blur-2xl animate-ping"></div> */}
+                {/* <div className="absolute bottom-0 right-1/3 w-12 h-12 bg-indigo-400/10 rounded-full blur-xl animate-ping delay-700"></div> */}
+
 
                 {/* Transactions Summary & Form */}
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <div className="bg-white/20 backdrop-blur-4xl rounded-3xl shadow-xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                        <TransactionForm onSubmit={handleAddOrEdit} initialData={editing} />
+                        <TransactionForm onSubmit={handleAdd} initialData={editing} />
                     </div>
                     <div className="bg-white/20 backdrop-blur-2xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
                         {transactions && <SummaryCards transactions={transactions} />}
@@ -155,13 +216,14 @@ export default function Home() {
                     </h2>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                            <BudgetForm onSubmit={handleAddOrEditBudget} initialData={editingBudget} />
+                            <BudgetForm onSubmit={handleAddBudget} initialData={editingBudget} />
                         </div>
                         <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
                             <BudgetList
                                 budgets={budgets}
                                 onEdit={(b) => setEditingBudget(b)}
                                 onDelete={handleDeleteBudget}
+                                onUpdate={handleUpdateBudget}
                             />
                         </div>
                     </div>
@@ -174,7 +236,7 @@ export default function Home() {
                         <BudgetVsActualChart
                             budgets={budgets}
                             transactions={transactions}
-                            selectedMonth={"2025-07"}
+                            selectedMonth={new Date().toISOString().slice(0, 7)}
                         />
                     </div>
                     <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
@@ -182,7 +244,7 @@ export default function Home() {
                         <SpendingInsights
                             budgets={budgets}
                             transactions={transactions}
-                            selectedMonth={"2025-07"}
+                            selectedMonth={new Date().toISOString().slice(0, 7)}
                         />
                     </div>
                 </section>
@@ -194,12 +256,13 @@ export default function Home() {
                             transactions={transactions}
                             onDelete={handleDelete}
                             onEdit={(tx) => setEditing(tx)}
+                            onUpdate={handleUpdate}
                         />
                     ) : (
                         <div className="text-gray-500 text-center animate-pulse">Loading...</div>
                     )}
                 </section>
-            </main>
-        </div>
+            </main >
+        </div >
     );
 }

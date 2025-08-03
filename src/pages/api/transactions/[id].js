@@ -8,6 +8,8 @@ export default async function handler(req, res) {
     const { id } = req.query;
     const { userId } = getAuth(req);
     const uId = userId;
+    console.log(`Transaction API called with method: ${req.method}, userId: ${uId}, transactionId: ${id}`);
+
 
     if (!uId) {
         return res.status(401).json({ error: "Unauthorized" });
@@ -16,6 +18,8 @@ export default async function handler(req, res) {
     if (req.method === "PUT") {
         try {
             const { amount, date, description, category } = req.body;
+            console.log(`Updating transaction with ID: ${id} for user: ${uId}`);
+
             const updated = await Transaction.findOneAndUpdate(
                 { userId: uId, _id: id },
                 { amount, date, description, category },

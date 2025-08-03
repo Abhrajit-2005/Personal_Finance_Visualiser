@@ -15,7 +15,7 @@ export default async function handler(req, res) {
             }
 
             const transactions = await Transaction.find({ userId });
-            console.log(`✅ Found ${transactions.length} transactions for user: ${userId}`);
+            // console.log(`✅ Found ${transactions.length} transactions for user: ${userId}`);
             return res.status(200).json(transactions);
         } catch (err) {
             console.error("❌ GET error:", err.message);
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         try {
             const data = req.body;
             const transaction = await Transaction.create(data);
-            console.log("✅ Transaction created:", transaction);
+            // console.log("✅ Transaction created:", transaction);
             return res.status(201).json(transaction);
         } catch (err) {
             console.error("❌ POST error:", err.message);

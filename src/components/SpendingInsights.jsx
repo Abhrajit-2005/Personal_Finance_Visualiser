@@ -8,6 +8,10 @@ export default function SpendingInsights({ budgets, transactions, selectedMonth 
             </div>
         );
     }
+    console.log("Hello Budgets:", budgets);
+    console.log("Selected Month:", selectedMonth);
+
+    console.log("Filtered Budgets:", budgets.filter((b) => b.month === selectedMonth));
 
     const insights = budgets
         .filter((b) => b.month === selectedMonth)
@@ -32,8 +36,7 @@ export default function SpendingInsights({ budgets, transactions, selectedMonth 
         });
 
     return (
-        <div className="rounded-2xl shadow-xl p-6 backdrop-blur bg-white/20 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700 space-y-4">
-            <h2 className="text-xl font-bold text-indigo-600 dark:text-teal-400">Spending Insights</h2>
+        <div className="rounded-2xl shadow-2xl p-6 backdrop-blur bg-white/50 dark:bg-gray-800/20 border border-white/30 dark:border-gray-700 space-y-4">
             {insights.map((item, idx) => (
                 <div
                     key={idx}
