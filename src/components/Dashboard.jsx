@@ -39,7 +39,7 @@ const LoadingAnimation = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-400 to-teal-500 flex items-center justify-center">
+        <div className="min-h-screen bg-gradient-to-br from-indigo-800 via-purple-600 to-teal-800 flex items-center justify-center">
             <div className="text-center space-y-8">
                 {/* Animated Logo/Icon */}
                 <div className="relative">
@@ -117,8 +117,7 @@ const LoadingAnimation = () => {
 
 export default function Home() {
     const { user, isLoaded } = useUser();
-    const [showLoading, setShowLoading] = useState(false);
-    const [hasShownLoader, setHasShownLoader] = useState(false);
+    const [showLoading, setShowLoading] = useState(true);
     const [editing, setEditing] = useState(null);
     const [editingBudget, setEditingBudget] = useState(null);
 
@@ -136,39 +135,24 @@ export default function Home() {
         fetcher
     );
 
-    // Show loading animation only on first sign-in
+    // Loading timer - show loading for 5-7 seconds randomly
     useEffect(() => {
-        if (isLoaded && userId && !hasShownLoader) {
-            // Check if user has seen the loader in this session
-            const hasSeenLoader = sessionStorage.getItem(`loader_shown_${userId}`);
+        if (isLoaded && userId) {
+            const loadingTime = Math.random() * 2000 + 5000; // 5-7 seconds
+            const timer = setTimeout(() => {
+                setShowLoading(false);
+            }, loadingTime);
 
-            if (!hasSeenLoader) {
-                setShowLoading(true);
-                setHasShownLoader(true);
-
-                // Mark that loader has been shown for this session
-                sessionStorage.setItem(`loader_shown_${userId}`, 'true');
-
-                const loadingTime = Math.random() * 2000 + 5000; // 5-7 seconds
-                const timer = setTimeout(() => {
-                    setShowLoading(false);
-                }, loadingTime);
-
-                return () => clearTimeout(timer);
-            }
+            return () => clearTimeout(timer);
         }
-    }, [isLoaded, userId, hasShownLoader]);
+    }, [isLoaded, userId]);
 
     // Show initial loading if user isn't loaded yet
     if (!isLoaded) {
-        return (
-            <div className="min-h-screen flex items-center justify-center text-gray-600 text-lg bg-gradient-to-br from-indigo-100 via-purple-50 to-teal-100">
-                Loading user...
-            </div>
-        );
+        return <LoadingAnimation />;
     }
 
-    // Show custom loading animation only on first sign-in
+    // Show custom loading animation
     if (showLoading) {
         return <LoadingAnimation />;
     }
