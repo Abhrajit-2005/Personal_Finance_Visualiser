@@ -46,7 +46,7 @@ export default function SummaryCards({ transactions }) {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-indigo-500/30 to-indigo-900/20 border border-white/30 hover:scale-105 transition">
+            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-indigo-500/30 to-indigo-900/20 border border-white/30 transition">
                 <div className="flex items-center space-x-3">
                     <ArrowDownRight className="text-indigo-600" size={32} />
                     <div>
@@ -58,7 +58,7 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-yellow-500/30 to-yellow-900/20 border border-white/30 hover:scale-105 transition">
+            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-yellow-500/30 to-yellow-900/20 border border-white/30 transition">
                 <div className="flex items-center space-x-3">
                     <PieChart className="text-yellow-600" size={32} />
                     <div>
@@ -72,7 +72,7 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-pink-500/30 to-pink-900/20 border border-white/30 hover:scale-105 transition">
+            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-pink-500/30 to-pink-900/20 border border-white/30 transition">
                 <div className="flex items-center space-x-3">
                     <Clock className="text-pink-600" size={32} />
                     <div>
@@ -87,7 +87,7 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-green-500/30 to-green-900/20 border border-white/30 hover:scale-105 transition">
+            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-green-500/30 to-green-900/20 border border-white/30 transition">
                 <p className="text-gray-700 text-sm mb-2">Transactions per Category</p>
                 <div className="h-32">
                     <ResponsiveContainer width="100%" height="100%">
@@ -117,7 +117,7 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-red-500/30 to-red-900/20 border border-white/30 hover:scale-105 transition">
+            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-red-500/30 to-red-900/20 border border-white/30 transition">
                 <div>
                     <p className="text-gray-700 text-sm mb-2">Highest Expense</p>
                     <h2 className="text-2xl font-bold text-gray-900">
@@ -126,7 +126,7 @@ export default function SummaryCards({ transactions }) {
                 </div>
             </div>
 
-            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-purple-500/30 to-purple-900/20 border border-white/30 hover:scale-105 transition">
+            <div className="rounded-2xl p-6 shadow-xl backdrop-blur bg-gradient-to-br from-purple-500/30 to-purple-900/20 border border-white/30 transition">
                 <p className="text-gray-700 text-sm mb-2">Avg. Transaction</p>
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
                     ₹ {averageTransaction.toFixed(2)}

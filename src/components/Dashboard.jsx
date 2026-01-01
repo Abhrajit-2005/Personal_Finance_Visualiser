@@ -300,24 +300,18 @@ export default function Home() {
 
                 {/* Transactions Summary & Form */}
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-white/20 backdrop-blur-4xl rounded-3xl shadow-xl hover:shadow-3xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                        <TransactionForm onSubmit={handleAdd} initialData={editing} />
-                    </div>
-                    <div className="bg-white/20 backdrop-blur-2xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
+
+                    <TransactionForm onSubmit={handleAdd} initialData={editing} />
+
+                    <div className="bg-white/20 backdrop-blur-2xl rounded-3xl shadow-lg p-6">
                         {transactions && <SummaryCards transactions={transactions} />}
                     </div>
                 </section>
 
                 {/* Charts Section */}
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                        <h2 className="text-2xl font-semibold text-indigo-700 mb-4 animate-fade-in">Monthly Expenses</h2>
-                        <MonthlyExpensesChart data={monthlyData} />
-                    </div>
-                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                        <h2 className="text-2xl font-semibold text-purple-700 mb-4 animate-fade-in">Category Breakdown</h2>
-                        <CategoryPieChart transactions={transactions} />
-                    </div>
+                    <MonthlyExpensesChart data={monthlyData} />
+                    <CategoryPieChart transactions={transactions} />
                 </section>
 
                 {/* Budgets Section */}
@@ -326,10 +320,8 @@ export default function Home() {
                         Monthly Budgets
                     </h2>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                            <BudgetForm onSubmit={handleAddBudget} initialData={editingBudget} />
-                        </div>
-                        <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
+                        <BudgetForm onSubmit={handleAddBudget} initialData={editingBudget} />
+                        <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6">
                             <BudgetList
                                 transactions={transactions}
                                 budgets={budgets}
@@ -343,15 +335,12 @@ export default function Home() {
 
                 {/* Budget vs Actual & Insights */}
                 <section className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
-                        <h2 className="text-2xl font-semibold text-indigo-700 mb-4 animate-fade-in">Budget vs Actual</h2>
-                        <BudgetVsActualChart
-                            budgets={budgets}
-                            transactions={transactions}
-                            selectedMonth={new Date().toISOString().slice(0, 7)}
-                        />
-                    </div>
-                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:bg-white">
+                    <BudgetVsActualChart
+                        budgets={budgets}
+                        transactions={transactions}
+                        selectedMonth={new Date().toISOString().slice(0, 7)}
+                    />
+                    <div className="bg-white/20 backdrop-blur-xl rounded-3xl shadow-lg p-6">
                         <h2 className="text-2xl font-semibold text-purple-700 mb-4 animate-fade-in">Spending Insights</h2>
                         <SpendingInsights
                             budgets={budgets}
@@ -362,7 +351,7 @@ export default function Home() {
                 </section>
 
                 {/* Transactions List */}
-                <section className="py-4 bg-white/20 backdrop-blur-xl rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-102 hover:bg-white">
+                <section className="py-4 bg-white/20 backdrop-blur-xl rounded-3xl shadow-xl">
                     {transactions ? (
                         <TransactionList
                             transactions={transactions}

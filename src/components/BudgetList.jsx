@@ -72,10 +72,6 @@ export default function BudgetList({ transactions, budgets, onEdit, onDelete, on
         setEditForm({ category: '', amount: '', month: '' });
     };
 
-    const getBudgetProgress = (budget) => {
-
-        return Math.floor(Math.random() * 100);
-    };
 
     const getProgressColor = (progress) => {
         if (progress <= 50) return 'from-green-400 to-emerald-500';
@@ -87,7 +83,21 @@ export default function BudgetList({ transactions, budgets, onEdit, onDelete, on
         <>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {budgets.map((budget) => {
-                    const progress = getBudgetProgress(budget);
+                    // Calculate spent amount for this budget
+                    const spent = transactions
+                        ? transactions
+                            .filter(tx =>
+                                tx.category === budget.category &&
+                                tx.date.slice(0, 7) === budget.month
+                            )
+                            .reduce((sum, tx) => sum + tx.amount, 0)
+                        : 0;
+
+                    // Calculate percentage
+                    const progress = budget.amount > 0
+                        ? Math.min(Math.round((spent / budget.amount) * 100), 100)
+                        : 0;
+
                     const progressColor = getProgressColor(progress);
 
                     return (
@@ -151,7 +161,7 @@ export default function BudgetList({ transactions, budgets, onEdit, onDelete, on
                                         ></div>
                                     </div>
                                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                                        ₹{((budget.amount * progress) / 100).toLocaleString('en-IN', { minimumFractionDigits: 2 })} of ₹{budget.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                                        ₹{spent.toLocaleString('en-IN', { minimumFractionDigits: 2 })} of ₹{budget.amount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
                                     </div>
                                 </div>
                             </div>

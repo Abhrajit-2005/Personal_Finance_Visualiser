@@ -45,11 +45,11 @@ export default function TransactionForm({ onSubmit, initialData }) {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center p-4 bg-rounded-xl">
+        <div className="bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900 flex items-center justify-center rounded-3xl p-4">
 
             <form
                 onSubmit={handleSubmit}
-                className="relative z-10 rounded-3xl shadow-2xl p-8 backdrop-blur-xl bg-white/10 border border-white/20 space-y-8 w-full max-w-xl mx-auto transition-all duration-500 hover:shadow-indigo-500/25 hover:scale-[1.02] group"
+                className="relative z-10 rounded-3xl shadow-2xl p-8 backdrop-blur-xl bg-white/10 border border-white/20 space-y-8 w-full max-w-xl mx-auto"
                 style={{
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
@@ -57,7 +57,7 @@ export default function TransactionForm({ onSubmit, initialData }) {
             >
                 {/* Header */}
                 <div className="text-center space-y-2">
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-4 group-hover:rotate-12 transition-transform duration-300">
+                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl mb-4">
                         <TrendingUp className="w-8 h-8 text-white" />
                     </div>
                     <h2 className="text-3xl font-black bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
@@ -82,8 +82,8 @@ export default function TransactionForm({ onSubmit, initialData }) {
                             placeholder="e.g. 1200"
                             className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'amount'
                                 ? 'border-green-400 shadow-lg shadow-green-500/25'
-                                : 'border-white/20 hover:border-white/40'
-                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 group-hover/field:bg-white/10`}
+                                : 'border-white/20'
+                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300`}
                             onFocus={() => setFocusedField('amount')}
                             onBlur={() => setFocusedField('')}
                         />
@@ -114,8 +114,8 @@ export default function TransactionForm({ onSubmit, initialData }) {
                             placeholder="e.g. Grocery shopping"
                             className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'description'
                                 ? 'border-blue-400 shadow-lg shadow-blue-500/25'
-                                : 'border-white/20 hover:border-white/40'
-                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 group-hover/field:bg-white/10`}
+                                : 'border-white/20'
+                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300`}
                             onFocus={() => setFocusedField('description')}
                             onBlur={() => setFocusedField('')}
                         />
@@ -145,8 +145,8 @@ export default function TransactionForm({ onSubmit, initialData }) {
                             onChange={(e) => setDate(e.target.value)}
                             className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'date'
                                 ? 'border-purple-400 shadow-lg shadow-purple-500/25'
-                                : 'border-white/20 hover:border-white/40'
-                                } rounded-2xl text-white focus:outline-none transition-all duration-300 group-hover/field:bg-white/10`}
+                                : 'border-white/20'
+                                } rounded-2xl text-white focus:outline-none transition-all duration-300`}
                             onFocus={() => setFocusedField('date')}
                             onBlur={() => setFocusedField('')}
                         />
@@ -168,8 +168,8 @@ export default function TransactionForm({ onSubmit, initialData }) {
                         <select
                             className={`w-full mt-2 p-4 pl-14 bg-white/5 backdrop-blur-sm border-2 ${focusedField === 'category'
                                 ? `border-${category === 'Food' ? 'orange' : category === 'Rent' ? 'blue' : category === 'Entertainment' ? 'pink' : category === 'Utilities' ? 'yellow' : 'gray'}-400 shadow-lg shadow-${category === 'Food' ? 'orange' : category === 'Rent' ? 'blue' : category === 'Entertainment' ? 'pink' : category === 'Utilities' ? 'yellow' : 'gray'}-500/25`
-                                : 'border-white/20 hover:border-white/40'
-                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 appearance-none cursor-pointer group-hover/field:bg-white/10`}
+                                : 'border-white/20'
+                                } rounded-2xl text-white placeholder-white/50 focus:outline-none transition-all duration-300 appearance-none cursor-pointer`}
                             value={category}
                             onChange={(e) => setCategory(e.target.value)}
                             onFocus={() => setFocusedField('category')}
@@ -196,20 +196,20 @@ export default function TransactionForm({ onSubmit, initialData }) {
                 <div className="pt-4">
                     <button
                         type="submit"
-                        className="relative w-full py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-lg hover:shadow-indigo-500/50 transition-all duration-300 transform hover:-translate-y-1 hover:scale-[1.02] active:scale-95 overflow-hidden group/btn"
+                        className="relative w-full py-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white font-bold rounded-2xl shadow-lg overflow-hidden"
                     >
-                        <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 opacity-0 transition-opacity duration-300"></div>
                         <div className="relative z-10 flex items-center justify-center space-x-2">
                             <span className="text-lg">
                                 {initialData ? "Update" : "Add"} Transaction
                             </span>
-                            <div className="w-5 h-5 border-2 border-white rounded-full flex items-center justify-center group-hover/btn:rotate-180 transition-transform duration-300">
-                                <div className="w-2 h-2 bg-white rounded-full group-hover/btn:scale-150 transition-transform duration-300"></div>
+                            <div className="w-5 h-5 border-2 border-white rounded-full flex items-center justify-center transition-transform duration-300">
+                                <div className="w-2 h-2 bg-white rounded-full transition-transform duration-300"></div>
                             </div>
                         </div>
 
                         {/* Shine effect */}
-                        <div className="absolute inset-0 -translate-x-full group-hover/btn:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                        <div className="absolute inset-0 -translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
                     </button>
                 </div>
 
