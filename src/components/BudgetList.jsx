@@ -53,7 +53,7 @@ export default function BudgetList({ transactions, budgets, onEdit, onDelete, on
 
                 // console.log('Updating budget:', updatedBudget);
 
-                await onUpdate(updatedBudget); // ✅ Call the actual update function
+                await onUpdate(updatedBudget); // Call the actual update function
 
                 setEditingBudget(null);
                 setEditForm({ category: '', amount: '', month: '' });
