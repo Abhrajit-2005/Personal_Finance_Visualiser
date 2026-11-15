@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
-  const { isSignedIn } = useUser(); // ✅ Hook used correctly here
+  const { isSignedIn } = useUser(); // Hook used correctly here
   const [showSignIn, setShowSignIn] = useState(false);
   const router = useRouter();
 
