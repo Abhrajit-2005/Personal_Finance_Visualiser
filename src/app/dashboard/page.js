@@ -1,7 +1,7 @@
 "use client";
 
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/nextjs";
-import Home from "@/components/Dashboard"; // your big home component
+import Home from "@/components/Dashboard"; 
 
 export default function DashboardPage() {
     return (
