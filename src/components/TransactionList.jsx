@@ -14,7 +14,7 @@ function EditTransactionModal({ transaction, isOpen, onClose, onSave }) {
 
     const handleSubmit = () => {
         if (!formData.amount || !formData.description || !formData.category || !formData.date) {
-            return; // Basic validation
+            return;
         }
         onSave({
             ...transaction,
@@ -138,7 +138,7 @@ export default function TransactionList({ transactions, onDelete, onEdit, onUpda
     };
 
     const handleSaveEdit = async (updatedTransaction) => {
-        await onUpdate(updatedTransaction); // 🔄 call backend update
+        await onUpdate(updatedTransaction); // call backend update
         setEditingTransaction(null);
         setIsEditModalOpen(false);
     };
